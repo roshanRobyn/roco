@@ -5,7 +5,8 @@ import os
 import subprocess
 import keyboard
 import psutil
-log_file="RoCopy.txt"
+from pathlib import Path
+log_file = os.path.join(Path.home(), "Desktop", "RoCopy.txt")
 
 def rocopy():
     keyboard.send('ctrl+c')
@@ -14,6 +15,8 @@ def append_to_txt(text):
         with open(log_file,"a",encoding="utf-8") as f:
             f.write(text+"\n")
         if not is_notepad_open():
+            with open(log_file,"w",encoding="utf-8") as f:
+                pass
             subprocess.Popen(["notepad.exe",log_file])
     except Exception as e:
         print(e)
