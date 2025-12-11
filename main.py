@@ -17,8 +17,6 @@ def append_to_txt(text):
         with open(log_file,"a",encoding="utf-8") as f:
             f.write(text+"\n")
         if not is_notepad_open():
-            with open(log_file,"w",encoding="utf-8") as f:
-                pass
             subprocess.Popen(["notepad.exe",log_file])
     except Exception as e:
         print(e)
