@@ -5,8 +5,10 @@ import os
 import subprocess
 import keyboard
 import psutil
+import win32gui
+import win32con
 from pathlib import Path
-log_file = os.path.join(Path.home(), "Desktop", "RoCopy.txt")
+log_file = os.path.join(Path.home(), "Documents", "RoCopy.txt")
 
 def rocopy():
     keyboard.send('ctrl+c')
