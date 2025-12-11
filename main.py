@@ -45,7 +45,18 @@ def monitor_clip():
         except Exception as e:
             print(e)
         time.sleep(0.5)
+
+def clear_notepad():
+    with open(log_file,'w',encoding="utf-8") as f:
+        pass
+    hwnd = win32gui.FindWindow('Notepad', None)
+    if hwnd:
+        win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
+        time.sleep(0.05)
+        win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+
 keyboard.add_hotkey('f7',rocopy,suppress=True)
+keyboard.add_hotkey('f9',clear_notepad,suppress=True)
 clipboard_thread=threading.Thread(target=monitor_clip,daemon=True)
 clipboard_thread.start()            
 keyboard.wait('f8',suppress=True)
