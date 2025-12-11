@@ -54,9 +54,12 @@ def clear_notepad():
         win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
         time.sleep(0.05)
         win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
-
+def close_notepad():
+    subprocess.run(["taskkill", "/F", "/IM", "notepad.exe"])
+    
 keyboard.add_hotkey('f7',rocopy,suppress=True)
 keyboard.add_hotkey('f9',clear_notepad,suppress=True)
+keyboard.add_hotkey('f8',close_notepad,suppress=True)
 clipboard_thread=threading.Thread(target=monitor_clip,daemon=True)
 clipboard_thread.start()            
 keyboard.wait('f8',suppress=True)
