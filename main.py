@@ -204,10 +204,37 @@ def clear_notepad():
         win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
 def close_notepad():
     subprocess.run(["taskkill", "/F", "/IM", "notepad.exe"])
-    
-keyboard.add_hotkey('f7',rocopy,suppress=True)
-keyboard.add_hotkey('f9',clear_notepad,suppress=True)
-keyboard.add_hotkey('f8',close_notepad,suppress=True)
+    print("Exiting...")
+    detector.stop_mouse_listener()
+    root.quit()
+    sys.exit()
+#keyboard.add_hotkey('f6',rocopy,suppress=True)
+keyboard.add_hotkey('f8',clear_notepad,suppress=True)
+keyboard.add_hotkey('f9',close_notepad,suppress=True)
 clipboard_thread=threading.Thread(target=monitor_clip,daemon=True)
 clipboard_thread.start()            
-keyboard.wait('f8',suppress=True)
+
+
+print("🎯 Smart Selection Detector Running...")
+detector = TextSelectionDetector()
+
+if not detector.start_mouse_listener():
+    print("Not Running")
+
+root = tk.Tk()
+root.withdraw()
+detector.root = root
+
+def check_queue():
+    detector.check_overlay_queue()
+    root.after(20, check_queue)
+    
+check_queue()
+
+try:
+    root.mainloop()
+except KeyboardInterrupt:
+    pass
+finally:
+    detector.stop_mouse_listener()   
+
