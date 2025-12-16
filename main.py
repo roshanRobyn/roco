@@ -99,7 +99,7 @@ class TextSelectionDetector:
             
     def on_button_click(self):
         self.hide_overlay()
-        time.sleep(0.5)
+        time.sleep(0.016)
         rocopy()
         
     def on_click(self, x, y, button, pressed):
