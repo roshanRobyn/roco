@@ -12,6 +12,12 @@ import sys
 from pynput import mouse
 from pynput.mouse import Listener
 from pathlib import Path
+from tendo import singleton
+try:
+    me = singleton.SingleInstance() 
+except singleton.SingleInstanceException:
+    print("Another instance is already running. Exiting.")
+    sys.exit()
 log_file = os.path.join(Path.home(), "Documents", "RoCopy.txt")
 
 class TextSelectionDetector:
